@@ -2,8 +2,18 @@
 
 @tailwind components;
 
-@tailwind utilities;
+
 
 .big {
   font-size: 30px;
 }
+
+h1 {
+   @apply text-2xl;
+}
+
+.container {
+  @apply max-w-sm mx-auto flex p-6 bg-white rounded shadow-lg;
+}
+
+@tailwind utilities;
