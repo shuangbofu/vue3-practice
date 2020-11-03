@@ -1,40 +1,63 @@
-import { computed, Ref, defineComponent, reactive, ref, SetupContext, onMounted } from 'vue'
+import { computed, Ref, toRefs, defineComponent, reactive, ref, SetupContext, onMounted } from 'vue'
 import { Button } from 'ant-design-vue'
+import { createTypes } from 'vue-types'
 
 interface WelcomeProps {
   title: String,
-  visible: boolean,
-  btnClick: (count: Ref<Number>) => void;
+  visible: Boolean,
+  onBtnClick: (count: Ref<Number>) => void;
 }
 
-export default defineComponent<WelcomeProps>({
-  setup(props: WelcomeProps, { slots }) {
+export default defineComponent({
+  props: {
+    title: String,
+    visible: Boolean,
+    onBtnClick: Function,
+    onJo222hn2: Function
+  },
+  setup(props, { slots, emit }) {
     const count = ref(1)
-    console.log(props)
-    const name = computed(() => `欢迎【${props.title}】`)
-
     onMounted(() => {
       console.log('onMounted')
     })
+    const tip = renderTip(props.title, props.visible)
+    console.log(props.visible)
     return () => (
       <>
         <div class="container">
-
-          <div> {false} {name.value},{count.value}</div>
-          <Button
-            type="primary"
-            onClick={() => {
-              props.btnClick(count)
-            }}>按钮</Button>
+          {`name:${tip.name.value}`},{props.visible.toString()}
+          {tip.render()}
+          <div class="mx-auto p-2">
+            {count.value}
+            <Button type="primary"
+              onClick={() => {
+                props.onBtnClick(count)
+              }}>按钮</Button>
+            {slots.default()}
+          </div>
         </div>
-        {slots.defualt()}
       </>
     )
   }
 })
 
-// const click = ({ count, visible }) => {
-//   count.value++
-//   visible.value = !visible.value;
-//   console.log(count.value, visible.value)
-// }
+function renderTip(title, visible) {
+  const name = computed(() => `欢迎【${title}】`)
+  const hasTip = computed(() => visible)
+
+  const render = () => {
+    console.log(hasTip.value)
+    if (hasTip.value) {
+      return <>
+        <div>
+          {visible.toString()}
+          {name.value}
+        </div>
+      </>
+    }
+  }
+  return {
+    render,
+    name
+  }
+}
