@@ -1,22 +1,11 @@
-import { defineComponent, ref } from "vue";
-import Welcome from './views/Welcome'
-
+import { defineComponent } from "vue";
 import { RouterView } from 'vue-router'
 export default defineComponent(() => {
-  const visible = ref(true)
   return () => (
     <div id="app">
-      {/* <RouterView /> */}
-      <Welcome visible={visible.value}
-        title="Welcome"
-        onBtnClick={
-          count => {
-            count.value++
-            visible.value = !visible.value
-          }
-        }>
-        sxxxx
-      </Welcome>
+      {/* <div class="px-6 py-4 transition-all duration-300"> */}
+        <RouterView />
+      {/* </div> */}
     </div >
   )
 })

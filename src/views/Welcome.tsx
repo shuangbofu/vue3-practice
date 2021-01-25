@@ -33,7 +33,7 @@ export default defineComponent({
               onClick={() => {
                 props.onBtnClick(count)
               }}>按钮</Button>
-            {slots.default()}
+            {/* {slots.default()} */}
           </div>
         </div>
       </>
